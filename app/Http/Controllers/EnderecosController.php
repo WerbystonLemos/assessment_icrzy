@@ -16,13 +16,20 @@ class EnderecosController extends Controller
 
         $arrayCepResult = array_map(function($e) use ($ajax){
 
-            return ( isset($e['erro']) )
-                        ? ['erro'=>$e['erro']]
-                        : $ajax->getCep($e);
+            if( isset($e['erro']) )
+            {
+                return ['erro'=>$e['erro']];
+            }
+            else
+            {
+                $data           = $ajax->getCep($e);
+                $reorderData    = $this->reorganizaDados($data);
+                return $reorderData;
+            }
 
             }, $arrayListString);
 
-        return $arrayCepResult;
+        return array_reverse($arrayCepResult);
     }
 
     private function trataString($listCep)
@@ -38,5 +45,22 @@ class EnderecosController extends Controller
         }, $arrayCeps);
 
         return $res;
+    }
+
+    private function reorganizaDados($dados)
+    {
+        $res = array();
+        $res['cep']         = preg_replace('/\D/','', $dados->cep);
+        $res['label']       = $dados->logradouro.', '.$dados->localidade;
+        $res['logradouro']  = $dados->logradouro;
+        $res['complemento'] = $dados->complemento;
+        $res['bairro']      = $dados->bairro;
+        $res['localidade']  = $dados->localidade;
+        $res['uf']          = $dados->uf;
+        $res['ibge']        = $dados->ibge;
+        $res['gia']         = $dados->gia;
+        $res['ddd']         = $dados->ddd;
+        $res['siafi']       = $dados->siafi;
+        return ($res);
     }
 }
