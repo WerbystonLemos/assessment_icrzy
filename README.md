@@ -1,6 +1,6 @@
 # CONSIDERAÇÕES DO DEV
 Nessa aplicação, optei por não por as regras de negócios referente à chamada Ajax na controller pois, por mais que seja uma aplicação simples, pensei em adotar a estratégia que seria adotada em uma situação real afim de evitar repetição de código e reaproveitamento. Então, criei um Helper (app/Helpers/AjaxCurl.php) quer esteja disponível para  qualquer classe que necessitasse fazer uso do cURL para uma chamada Ajax, assim, já estaria pré-pronta e pouparia tempo e manutenção.
-
+***Obs:. o teste optava por usar Laravel ou Lumen. Como optei por Laravel usei o arquivo de rotas api.php, então deve-se usar o endpoit acrescido de '/api' (/api/search/local/01001000,17560-246)***
 
 # MISSÃO
 ## Teste - Desenvolvedor backend
